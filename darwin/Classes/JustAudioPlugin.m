@@ -44,7 +44,11 @@
         if (category) {
             _configuredSession = YES;
         }
-        [[AVAudioSession sharedInstance] setCategory:category error:nil];
+        if (category == AVAudioSessionCategoryPlayback) {
+            [[AVAudioSession sharedInstance] setCategory:category withOptions:AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionDuckOthers error:nil];
+        } else {
+            [[AVAudioSession sharedInstance] setCategory:category error:nil];
+        }
 #endif
 		result(nil);
 	} else {
